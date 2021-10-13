@@ -1,5 +1,6 @@
 #  GDCC Comp 2021 By Brett Palmer
-#  Written With Only A few Weeks Python Knowledge.
+#  Written With Only A few Weeks Python Knowledge. 
+#  October 13th 2021
 
 __author__ = "Brett Palmer"
 __license__ = "Mince @ FoldingCircles(C)2021-2030)"
