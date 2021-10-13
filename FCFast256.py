@@ -1,28 +1,20 @@
-# GDCC Data Compression Comp 2021 >>Entry 1 Fast256 Bit Reduction
-# By Brett Palmer AKA MINCE
-
-
-#  This Is One step up from Psudo Written For Readerbility
-
-#  Will Optimize in Couple of days Just before Submition. 
+#  GDCC Comp 2021 By Brett Palmer
 #  Written With Only A few Weeks Python Knowledge.
 
-# Notes to self:
-# speedups 
-#         1) Read all data at once.
-#         2) Work on Data held in memory.
-#         3) Write in big chunks.
-#         4) Bit reduction of value 63 or higher is pointless as not saving any bits.
-#         5) Once Data Is Reduced and compacted into 32 byte chunks Further Compress via pattern Match && >64 bit
-#         6) Add Commandline Argv with help
-#         7) Bugs >Maxsize  >Verbrose
+__author__ = "Brett Palmer"
+__license__ = "Mince @ FoldingCircles(C)2021-2030)"
+__version__ = "0.0010"
+__status__ = "Development Pre Alpha"
+__email__ = "mindsmend@gmail.com"
+__url__ = "https://github.com/MindsMend-org"
 
-
+# speedups read all in 1 go
 # binary_poem = bytes(open("poem.txt").read(), encoding="utf-8")
 # binary_poem[i] = 84
 
 
 # import sys
+import os
 import time
 import numpy as np
 # import argparse
@@ -39,7 +31,7 @@ import os
 #  except EOFError:
 
 from array import array
-
+# 406>MagicBit
 #bin_array = array("B")
 #bits = "10111111111111111011110"
 
@@ -80,10 +72,6 @@ print('')
 
 
 
-
-
-
-
 # Args Verbrose 0 Quiet / 1 Info
 Verbrose = 1
 Lowmemmode = 1
@@ -96,7 +84,11 @@ KeySize = 256  # =256
 
 #StartTime = time.time()
 if __name__ == '__main__':
-    WelcombeMessage('GDCC Data Compression Fast Compression By Brett Palmer.')
+    WelcombeMessage('GDCC Global Data Compression Compe. Entry (1)256Fast Compression By Brett Palmer.')
+
+    print('')
+    print('GUI Mode No Arguments; FCzip -h for help.')
+    print('')
 
     Question = ""
     Question = input("Do You Want To Compress ? (y/n)?: ")
@@ -137,11 +129,24 @@ if __name__ == '__main__':
         print("Number of arguments: ", len(sys.argv))
         print("The arguments are: ", str(sys.argv))
 
-    if Verbrose == 1:
-        print('KeyScore>>in Bits.')
-        for i in range(KeySize):
-            binary_string = '{:0b}'.format(i)
+
+
+
+    #Create bin representation strings
+    MaskBitReducedString = []
+    print('Build Mask(KeyScore>>in Bits).')
+    for i in range(KeySize):
+        binary_string = '{:0b}'.format(i)
+        MaskBitReducedString.append(binary_string)
+
+        # Show InnerWorkings Build Mask List.
+        if Verbrose > 1:
             print(i, ' = ', binary_string)
+
+    # Show Bit Mask List.
+    if Verbrose > 0:
+        print(MaskBitReducedString)
+        print(MaskBitReducedString[0], '-', MaskBitReducedString[i])
 
     if Verbrose == 0:
         print('Running In Silent Mode.')
@@ -400,11 +405,43 @@ if __name__ == '__main__':
 
             print('Bit reduction MapFile Wrote.')
 
-            #-------------------------------------------------------------
+            # bin_array = array("B")
+            # bits = "10111111111111111011110"
 
+            # bits = bits + "0" * (32 - len(bits))  # Align bits to 32, i.e. add "0" to tail
+            # for index in range(0, 32, 8):
+            #    byte = bits[index:index + 8][::-1]
+            #    bin_array.append(int(byte, 2))
+
+            # with open("test.bnr", "wb") as f:
+            #    f.write(bytes(bin_array))
+
+            #  firstline = f.readline().rstrip()
+
+            # -------------------------------------------------------------
+            # -------------------MAGIC BIT---------------------------------
+            # -------------------------------------------------------------
+
+            # Setup Array to write in one shot.
+            bin_array = array("B")
+
+            # Setup WriteBlock
+            BinWriteBlock = []
+
+            # Set Chunk Size(WriteBlockSize)
             Chunk = 32  #Block Of Maped Bits.
-            MaxBits = 0
 
+            # BitsHolder
+            bits = ""
+
+            # Counter Bit Count
+            MaxBits = 0
+            BitCountThisBloc = 0
+
+            # Counter Current Map Index Pos
+            PositionInMap = 0
+
+            # Stats
             OrigSize = 0
             MappedSize = 0
 
@@ -435,6 +472,7 @@ if __name__ == '__main__':
             #Move Past Header
             FcB256.seek(Zip_seek)
 
+            # Fix To Use Data_Byte_Array(Copy Of File Compressing or the map)(High-Mem)
             #FcM256 = open(Compressed_ArgsFile_Name, 'r')  # Mapfile In>
             with open(Compressed_ArgsFile_Name, "r") as f:  # In>file>MAP
                 String_byte = f.read(Read_Size)  # speedup use size off key as Read_Size = KeySize
@@ -445,21 +483,176 @@ if __name__ == '__main__':
                     except:
                         print('End Of Map Data.?')
                     pass
-                    if Verbrose == 3:
+                    # Update Block
+                    BinWriteBlock.append(MaskBitReducedString[MapValue])
+
+                    # Update PositionInMap
+                    PositionInMap += 1
+                    BitCountThisBloc += len(MaskBitReducedString[MapValue])  # Check if larger than Chunk
+                    if BitCountThisBloc >= Chunk:
+                        print('Exceeded Allocated BlockSize of:', Chunk, '  MaxBits =', MaxBits, '  Mapped Byte Count ='
+                              , PositionInMap)
+
+                    if len(MaskBitReducedString[MapValue]) > MaxBits:
+                        MaxBits = len(MaskBitReducedString[MapValue])
+
+                    #if Maxbits == 1 -Write Block / 32 Entries
+                    if PositionInMap == 32 & MaxBits == 1:
+
+                        # Add Trail Data For Decompression.
+                        bin_array.append(PositionInMap)
+
+                        # Fix Write all at end?
+                        # Write Block FollowData(32 Reads Of 1 Bits)
+                        #FcB256.write(bytes(bin_array))
+
+                        # Write Block of 32 * 1 bits
+                        PositionInMap = 0
+                        print('Block Of 32 Bytes.')
+
+                        # Reset Stuff>
+                        # Remove MaskBitReducedString[0 - PositionInMap]
+                        for CreateBin in range(PositionInMap):
+                            #    byte = bits[index:index + 8][::-1]
+                            #    bin_array.append(int(byte, 2))
+
+                            # Construct Array Data.
+                            bin_array.append(int(BinWriteBlock[CreateBin]))
+                            # Write to Zip Reduced Bytes
+                            # FcB256.write(bytes(bin_array)) # fix Write at end.
+
+                            # Remove BinWriteBlock
+                            BinWriteBlock.pop(CreateBin)
+
+                        # MaxBits = 0
+                        MaxBits = 0
+
+                    #if Maxbits == 2
+                    if PositionInMap == 16 & MaxBits == 2:
+                        # Write Block FollowData(10 reads of 3 bits)
+                        # Write Block of 16 * 2 bits
+                        PositionInMap = 0
+                        print('Block Of 16 Bytes.')
+                        # Reset Stuff>
+                        # Remove MaskBitReducedString[0 - PositionInMap]
+                        # MaxBits = 0
+                        MaxBits = 0
+
+
+                    #if Maxbits == 3   # tail.6666666666667  bits = bits + "0" * (32 - len(bits))  # Align bits to 32, i.e. add "0" to tail
+                    if PositionInMap == 10 & MaxBits == 3:
+                        # Write Block FollowData(10 reads of 3 bits)
+                        # Write Block of 10 * 3 bits
+                        PositionInMap = 0
+                        print('Block Of 10 Bytes.')
+                        # Reset Stuff>
+                        # Remove MaskBitReducedString[0 - PositionInMap]
+                        # MaxBits = 0
+                        MaxBits = 0
+
+
+                    #if Maxbits == 4
+                    if PositionInMap == 8 & MaxBits == 4:
+                        # Write Block FollowData(8 reads of 4 bits)
+                        # Write Block of 8 * 4 bits
+                        PositionInMap = 0
+                        print('Block Of 6 Bytes.')
+                        # Reset Stuff>
+                        # Remove MaskBitReducedString[0 - PositionInMap]
+                        # MaxBits = 0
+                        MaxBits = 0
+
+
+                    #if Maxbits == 5
+                    if PositionInMap == 6 & MaxBits == 5:
+                        # Write Block FollowData(6 reads of 5 bits)
+                        # Write Block of 6 * 5 bits
+                        PositionInMap = 0
+                        print('Block Of 6 Bytes.')
+                        # Reset Stuff>
+                        # Remove MaskBitReducedString[0 - PositionInMap]
+                        # MaxBits = 0
+                        MaxBits = 0
+
+                    #if Maxbits == 6
+                    if PositionInMap == 5 & MaxBits == 6:
+                        # Write Block FollowData(5 reads of 6 bits)
+                        # Write Block of 5 * 6 bits
+                        PositionInMap = 0
+                        print('Block Of 5 Bytes.')
+                        # Reset Stuff>
+                        # Remove MaskBitReducedString[0 - PositionInMap]
+                        # MaxBits = 0
+                        MaxBits = 0
+
+
+                    #if Maxbits > 6 -Just write Block / 5 entries
+                    if PositionInMap == 4 & MaxBits > 6:
+                        # Write Block FollowData(4 reads of 8 bits)
+                        # Write Block of 4 * 8 bits
+                        PositionInMap = 0
+                        print('Block Of 4 Bytes.')
+                        # Reset Stuff>
+                        # Remove MaskBitReducedString[0 - PositionInMap]
+                        # MaxBits = 0
+                        MaxBits = 0
+
+
+                    # Data Was Not Caught.
+                    if PositionInMap > 32:
+                        print('Data Withheld But Construction Data Lost !!')
+                        MaxBits = 0
+                        PositionInMap = 0
+
+                        # Remove MaskBitReducedString[0 - PositionInMap]
+                        for CreateBin in range(PositionInMap):
+                            #    byte = bits[index:index + 8][::-1]
+                            #    bin_array.append(int(byte, 2))
+
+                            # Construct Array Data.
+                            bin_array.append(int(BinWriteBlock[CreateBin]))
+                            # Write to Zip Reduced Bytes
+                            # FcB256.write(bytes(bin_array)) # fix Write at end.
+
+                            # Remove BinWriteBlock
+                            BinWriteBlock.pop(CreateBin)
+
+
+                    if Verbrose > 2:
                         print(MapValue)
                         print(MapValue.bit_length())
 
                     MappedSize += MapValue.bit_length()
                     OrigSize += 8
                     String_byte = f.read(Read_Size)  #Read More
+
+                if Verbrose:
+                    print('')
+                    print('Compression Data:')
+                    print('MaxBitSize =', MaxBits)
+                    print('PositionInMap', PositionInMap)
+                    print('')
+
+                print('Writing Zip: Write In One...')
+
+                # Write to Zip Reduced Bytes
+                #bin_array.append(int(BinWriteBlock[0]))
+                FcB256.write(bytes(bin_array))  # fix Write at end.
+
+                # Memory Cleanup
+                bin_array = 0
                 # End Of Compression! GDCC 3 days to go !!
 
             #Results
             print('\nResults:')
             added = (OrigSize / 8) / 10
-            print('Origanal size =', OrigSize/1024)
-            print('Mapped Size   = ', MappedSize/1024)
-            print('Added         =  ', added/1024)
+            os_Z_fsize = os.stat(Compressed_Bin_ArgsFile_Name)
+            os_fsize = os.stat(ArgsFile)
+            print('File Size On Disc =', os_fsize.st_size)
+            print(' ZIP Size On Disc =', os_Z_fsize.st_size)
+            print('    Original size =', OrigSize/1024)
+            print('    Mapped Size   = ', MappedSize/1024)
+            print('    Added         =  ', added/1024)
 
 
             print('Saving ', (OrigSize - (MappedSize + added))/1024, ' Bytes(ish)  Ratio of ', OrigSize / (MappedSize + added) * 100, '%')
@@ -488,4 +681,4 @@ EndTime = time.time()
 #  Show Running Time
 print('Time Taken =', EndTime - StartTime)
 
-input("Foundeations All Done(Map To Binary & Decompress To Be finished 48 hours to go..:<) Press Enter to continue...")
+input("Foundations All Done(Map To Binary & Decompress To Be finished 48 hours to go..:<) Press Enter to continue...")
