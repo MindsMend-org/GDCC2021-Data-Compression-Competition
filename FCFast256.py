@@ -1,11 +1,23 @@
-# GDCC Entry 1 Fast256 Bit Reduction
+# GDCC Data Compression Comp 2021 >>Entry 1 Fast256 Bit Reduction
 # By Brett Palmer AKA MINCE
 
-#  GDCC Comp 2021 By Brett Palmer
+
+#  This Is One step up from Psudo Written For Readerbility
+
+#  Will Optimize in Couple of days Just before Submition. 
 #  Written With Only A few Weeks Python Knowledge.
 
+# Notes to self:
+# speedups 
+#         1) Read all data at once.
+#         2) Work on Data held in memory.
+#         3) Write in big chunks.
+#         4) Bit reduction of value 63 or higher is pointless as not saving any bits.
+#         5) Once Data Is Reduced and compacted into 32 byte chunks Further Compress via pattern Match && >64 bit
+#         6) Add Commandline Argv with help
+#         7) Bugs >Maxsize  >Verbrose
 
-# speedups read all in 1 go
+
 # binary_poem = bytes(open("poem.txt").read(), encoding="utf-8")
 # binary_poem[i] = 84
 
