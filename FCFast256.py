@@ -1057,32 +1057,4 @@ print('Time Taken =', EndTime - StartTime)
 input("Foundations All Done(Map To Binary & Decompress To Be finished 48 hours to go..:<) Press Enter to continue...")
 
 exit()
-
-binary_stream = io.BytesIO()
-# Binary data and strings are different types, so a str
-# must be encoded to binary using ascii, utf-8, or other.
-binary_stream.write("DataStreamer Finally Ready!!!\n".encode('ascii'))
-binary_stream.write("DataStreamer Finally Ready!!!!\n".encode('utf-8'))
-
-# Move cursor back to the beginning of the buffer
-binary_stream.seek(0)
-
-# Read all data from the buffer
-stream_data = binary_stream.read()
-
-# The stream_data is type 'bytes', immutable
-print(type(stream_data))
-print(stream_data)
-input('Press enter....')
-
-# To modify the actual contents of the existing buffer
-# use getbuffer() to get an object you can modify.
-# Modifying this object updates the underlying BytesIO buffer
-mutable_buffer = binary_stream.getbuffer()
-print(type(mutable_buffer))  # class 'memoryview'
-mutable_buffer[0] = 0xFF
-
-# Re-read the original stream. Contents will be modified
-# because we modified the mutable buffer
-binary_stream.seek(0)
-print(binary_stream.read())
+#Once it decompresses i need to optimize speed and code!.
