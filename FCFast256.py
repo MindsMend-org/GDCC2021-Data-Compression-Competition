@@ -1,16 +1,12 @@
 #  GDCC Comp 2021 By Brett Palmer
 #  Written With Only A few Weeks Python Knowledge.
 
-
-#688-write zip errors int?str?
 __author__ = "Brett Palmer"
 __license__ = "Mince @ FoldingCircles(C)2021-2030)"
 __version__ = "0.0010"
 __status__ = "Development Pre Alpha"
 __email__ = "mindsmend@gmail.com"
 __url__ = "https://github.com/MindsMend-org"
-
-# from bitstream import BitStream
 
 # import sys
 import io
@@ -21,29 +17,11 @@ import numpy as np
 import sys
 import os
 
-
-#Bugs List
-#Bug one if file already exists it adds onto rather than write over.
-
-
 #  File Chk Prefix
 #  M_FC_FST256_V1
 #  except EOFError:
 
 from array import array
-# 406>MagicBit
-#bin_array = array("B")
-#bits = "10111111111111111011110"
-
-#bits = bits + "0" * (32 - len(bits))  # Align bits to 32, i.e. add "0" to tail
-#for index in range(0, 32, 8):
-#    byte = bits[index:index + 8][::-1]
-#    bin_array.append(int(byte, 2))
-
-#with open("test.bnr", "wb") as f:
-#    f.write(bytes(bin_array))
-
-#  firstline = f.readline().rstrip()
 
 def WelcombeMessage(MESS):
     print(f'FOLDING CIRCLES , {MESS}')
@@ -55,26 +33,7 @@ def ClearFile(Fname):
 def bitstring_to_bytes(s):
     return int(s, 2).to_bytes((len(s) + 7) // 8, byteorder='big')
 
-#string = "aAzZ09" #!£$%^&*"
-
-# string with encoding 'utf-8'
-#arr = bytes(string, 'utf-8')
-#arr2 = bytes(string, 'ascii')
-
-#print(arr, '\n')
-
-# actual bytes in the the string
-#for byte in arr:
-#   print(byte, end=' ')
-#print("\n")
-#for byte in arr2:
-#    print(byte, end=' ')
-
-print('')
-
-
-
-# Args Verbrose 0 Quiet / 1 Info
+# Args Verbrose 0 = Quiet / 1 = Info
 Verbrose = 1
 Lowmemmode = 0
 Ratio = 100
@@ -161,7 +120,7 @@ if __name__ == '__main__':
     MaxRep = 100000
 
     #  Set Read Size
-    Read_Size = 1
+    Read_Size = 1024
 
     #  Make array for keys
     Keys = [0 for i in range(KeySize)]
@@ -188,7 +147,7 @@ if __name__ == '__main__':
     StartTime = time.time()
 
     if Mode == 1:  # Compress Mode Verbrose 1 and 0
-        Read_Size = 1 #To be sure
+        Read_Size = 1 #To be sure its 1  early dayz go slooooooooooooooo
         if Verbrose == 1:
             if Lowmemmode == 1:
                 #  Read File Data in Bytes And Score
@@ -242,7 +201,7 @@ if __name__ == '__main__':
                     for i in Data_Byte_Array:
                         pos += 1
                         if i:
-                            Score[i] += 1
+                            Score[i] += len(bin(i))
 
                         if Score[i] > MaxRep:  # NoteWorthy.
                             if i not in NoteWorthy:  # NoteWorthy.
@@ -269,7 +228,7 @@ if __name__ == '__main__':
                     pass
                     # print (index)
                     if index:
-                        Score[index] += 1 #  Add Score
+                        Score[index] += len(bin(index))  #  Add Score
                         # if Score[index] > MaxRep:
                         # if index not in NoteWorthy:  # NoteWorthy.
                         # NoteWorthy.append(index)
@@ -323,7 +282,7 @@ if __name__ == '__main__':
                 HS = -1         # Reset Loop HighScore
                 ID = 0          # Reset Loop Score Index
 
-                if Verbrose:
+                if Verbrose > 1:
                     print('')
                     print('List Size:=', KeySize)
                     print('Key Size =', len(ScoreKeylist))
@@ -486,8 +445,7 @@ if __name__ == '__main__':
             BitCountThisBloc = 0
 
             # Counter Current Map Index Pos
-            PositionInMap = 0
-
+            PositionInMap = 1
             # Stats
             OrigSize = 0
             MappedSize = 0
@@ -539,8 +497,9 @@ if __name__ == '__main__':
                     BinWriteBlock.append(MaskBitReducedString[MapValue])
 
                     # Update PositionInMap
-                    PositionInMap += BitCountThisBloc #start -1
-                    BitCountThisBloc += len(MaskBitReducedString[MapValue])  # Check if larger than Chunk
+                    PositionInMap += BitCountThisBloc  # start -1
+                    BitCountThisBloc = len(MaskBitReducedString[MapValue])
+                    # Check if larger than 32 add bit length
                     if BitCountThisBloc >= Chunk:
                         #print('Exceeded Allocated BlockSize of:', Chunk, '  MaxBits =', MaxBits, '  Mapped Byte Count ='
                         #      , PositionInMap)
@@ -564,13 +523,13 @@ if __name__ == '__main__':
 
 
                     # Data Was Not Caught. bin array ln=475
-                    if PositionInMap > 32:
+                    if PositionInMap > Chunk:
                         if Verbrose > 1:
                             print('Data Withheld But Construction Data Lost !!')  ######bin_array 475 linenum########<<Fix<
-                            print('bits=', PositionInMap)
+                            print('bits=', PositionInMap+1)
                             print('BinWriteBlockSize=', len(BinWriteBlock))
                             print('Max Index=', len(BinWriteBlock))
-                            print('PosInMap=', PositionInMap)
+                            print('PosInMap=', PositionInMap+1)
                             print('BWB_val=', BinWriteBlock)
                             print('')
                         #nstring = BinWriteBlock[3]
@@ -605,12 +564,12 @@ if __name__ == '__main__':
                         PositionInMap = 0
                         BitCountThisBloc = 0
 
-                    if PositionInMap == 32:
+                    if PositionInMap == Chunk:
                         if Verbrose > 1:
-                            print('bits=', PositionInMap)
+                            print('bits=', PositionInMap+1)
                             print('BinWriteBlockSize=', len(BinWriteBlock))
                             print('Max Index=', len(BinWriteBlock))
-                            print('PosInMap=', PositionInMap)
+                            print('PosInMap=', PositionInMap+1)
                             print('BWB_val=', BinWriteBlock)
                             print('')
                         #snstring = BinWriteBlock[3]
@@ -652,7 +611,7 @@ if __name__ == '__main__':
                     OrigSize += 8
                     String_byte = f.read(Read_Size)  #Read More
 
-                if Verbrose == 4 :
+                if Verbrose == 4:
                     print('')
                     print('Compression Data:')
                     print('MaxBitSize =', MaxBits)
@@ -967,10 +926,6 @@ if __name__ == '__main__':
             FcB256.close()
             print('Complete....')
 
-
-
-
-
     else:  # Decompress .M256 File >>>>> Mode !=1
         if Mode == 2:  # Decompress
             print('Decompression Of M256 File.')
@@ -993,5 +948,4 @@ print('Time Taken =', EndTime - StartTime)
 input("Foundations All Done(Map To Binary & Decompress To Be finished 48 hours to go..:<) Press Enter to continue...")
 
 exit()
-
 
