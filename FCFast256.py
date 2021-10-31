@@ -3,6 +3,9 @@
 
 #'line 430 480 verbose >1 write Mapfile ,csd
 
+#609/617/667/654 bin_stream.write( fix the writes!
+
+
 #688-write zip errors int?str?
 __author__ = "Brett Palmer"
 __license__ = "Mince @ FoldingCircles(C)2021-2030)"
@@ -23,23 +26,25 @@ import numpy as np
 import sys
 import os
 
+
 #Bugs List
 #Bug one if file already exists it adds onto rather than write over.
+
 
 #  File Chk Prefix
 #  M_FC_FST256_V1
 #  except EOFError:
 
 from array import array
+
 import sys
-
-
 def progress(percent=0, width=30):
     left = width * percent // 100
     right = width - left
     print('\r[', '#' * left, ' ' * right, ']',
           f' {percent:.0f}%',
           sep='', end='', flush=True)
+
 
 def print_at(x, y, text):
      sys.stdout.write("\x1b7\x1b[%d;%df%s\x1b8" % (x, y, text))
@@ -572,7 +577,7 @@ if __name__ == '__main__':
 
                         ##print('byte len =', len(byte), '   Pos:', PositionInMap)
 
-                        # check for limit to chunk<store<rewind<read
+                        # check for limit to chunk<store<rewind<read(Dont-Lose-This-Data-Position
                         if PositionInMap + len(byte) > Chunk:
                             ##Zip_seek = FcB256.tell() - (len(BinWriteBlock) - CreateBin)##bug with relocation of read
                             ##f.seek(Zip_seek)
@@ -595,13 +600,13 @@ if __name__ == '__main__':
                         #_StrToBin.append(int(byte, 2))
                         # Construct Array Data.
                         #bytes(_StrToBin, 'utf-16')
-                        ##print('_StrToBin', _StrToBin)
+                        print('_StrToBin', _StrToBin)
                         # _StrToBin = bytearray(BinWriteBlock[CreateBin], 'ascii')
                         #_StrToBin = bitstring_to_bytes(BinWriteBlock[CreateBin])
                         #print(_StrToBin)
                         
                         #bin_stream.write(BinWriteBlock[CreateBin].encode('ascii'))  # binary_stream.write
-                        bin_stream.write(bytes(BinWriteBlock[CreateBin].encode('ascii')))
+                        #bin_stream.write(bytes(BinWriteBlock[CreateBin].encode('ascii')))
 
                         if Verbose > 1:
                             print('#', CreateBin, '   ', BinWriteBlock[CreateBin], bin_stream)
@@ -609,6 +614,8 @@ if __name__ == '__main__':
                         #FcB256.write(bytes(bin_stream))  # fix Write at end.
                         #print('FileData', bytes(bin_stream))
 
+                    #bin_stream.write(bytes(BinWriteBlock[CreateBin].encode('ascii')))
+                    bin_stream.write(bytes(_StrToBin))
                     for RemoveMem in range(len(BinWriteBlock)):
                         # Remove BinWriteBlocks from memory
                         BinWriteBlock.pop(0)
@@ -649,13 +656,15 @@ if __name__ == '__main__':
                         # Construct Array Data.
                         #bytes(_StrToBin, 'utf-16')
                         #print('created int value from byte=', _StrToBin)
-                        bin_stream.write(BinWriteBlock[CreateBin].encode('ascii')) #binary_stream.write
+                        #bin_stream.write(BinWriteBlock[CreateBin].encode('ascii')) #binary_stream.write
 
                         if Verbose > 1:
                             print('#', CreateBin, '   ', BinWriteBlock[CreateBin], bin_stream)
                         # Write to Zip Reduced Bytes
                         #FcB256.write(bytes(bin_stream))  # fix Write at end.
                         #print('FileData', bytes(bin_stream))
+
+                    bin_stream.write(bytes(_StrToBin))
 
                     for RemoveMem in range(len(BinWriteBlock)):
                         # Remove BinWriteBlock from memory
@@ -697,6 +706,7 @@ if __name__ == '__main__':
             # Memory Cleanup
             #bin_stream.close() # save close till end
             # End Of Compression! GDCC days to go !!
+
 
         #File-data-zipped
         bin_stream.seek(0)
@@ -995,6 +1005,9 @@ EndTime = time.time()
 
 #  Show Running Time
 print('Time Taken =', EndTime - StartTime)
+
+print('Your Zipped Data ...*.B256')
 input(" :<) Press Enter to continue... ")
 
 exit()
+
