@@ -995,9 +995,6 @@ EndTime = time.time()
 
 #  Show Running Time
 print('Time Taken =', EndTime - StartTime)
-#  print('A Big thankyou to;')
-#  print('                   Allan Fiveash for lending me his laptop to make this possible.')
-#  print('                   James Arnold For Getting Me of the Streets.')
 input(" :<) Press Enter to continue... ")
 
 exit()
