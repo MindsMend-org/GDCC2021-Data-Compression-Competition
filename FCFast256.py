@@ -1,12 +1,12 @@
 #  GDCC Comp 2021 By Brett Palmer
 #  Written With Only A few Weeks Python Knowledge.
 
-#'line 430 480 verbose >1 write Mapfile ,csd
+# 'line 430 480 verbose >1 write Mapfile ,csd
 
-#609/617/667/654 bin_stream.write( fix the writes!
+# 609/617/667/654 bin_stream.write( fix the writes!
 
 
-#688-write zip errors int?str?
+# 688-write zip errors int?str?
 __author__ = "Brett Palmer"
 __license__ = "Mince @ FoldingCircles(C)2021-2030)"
 __version__ = "1.0090"
@@ -14,7 +14,7 @@ __status__ = "Development Pre Alpha"
 __email__ = "mindsmend@gmail.com/brettpalmerakamince@hotmail.com"
 __url__ = "https://github.com/MindsMend-org"
 
-#from bitstream import BitStream
+# from bitstream import BitStream
 import math
 
 from bitarray import bitarray
@@ -26,9 +26,8 @@ import numpy as np
 import sys
 import os
 
-
-#Bugs List
-#Bug one if file already exists it adds onto rather than write over.
+# Bugs List
+# Bug one if file already exists it adds onto rather than write over.
 
 
 #  File Chk Prefix
@@ -38,6 +37,8 @@ import os
 from array import array
 
 import sys
+
+
 def progress(percent=0, width=30):
     left = width * percent // 100
     right = width - left
@@ -47,23 +48,24 @@ def progress(percent=0, width=30):
 
 
 def print_at(x, y, text):
-     sys.stdout.write("\x1b7\x1b[%d;%df%s\x1b8" % (x, y, text))
-     sys.stdout.flush()
+    sys.stdout.write("\x1b7\x1b[%d;%df%s\x1b8" % (x, y, text))
+    sys.stdout.flush()
+
 
 def WelcombeMessage(MESS):
     print(f'             FOLDING CIRCLES                 2021                Brett Palmer\n\n  {MESS}')
 
+
 def ClearFile(Fname):
     f = open(Fname, 'w')
     f.close()
+
 
 def bitstring_to_bytes(s):
     return int(s, 2).to_bytes((len(s) + 7) // 8, byteorder='big')
 
 
 print('')
-
-
 
 # Args Verbrose 0 = Quiet / 1 = Info
 Verbose = 1
@@ -75,14 +77,14 @@ ArgsFile = ""
 # Set Key Size to 1byte
 KeySize = 256  # =256
 
-#StartTime = time.time()
+# StartTime = time.time()
 if __name__ == '__main__':
     WelcombeMessage('                            GDCC Global Data Compression Comp.\n\n '
                     'Entry (1).........................256 Mapped Bit Compression.\n')
     print('GUI Mode No Arguments; FCzip -h for help.')
     print('')
 
-    #Question = ""
+    # Question = ""
     Question = input("Do You Want To Compress ? (y/n)?: ")
 
     if Question == "Y" or Question == "y":
@@ -110,7 +112,7 @@ if __name__ == '__main__':
 
                 else:
                     ArgsFile = "FCOutPut.M256"  # Default Decompression File
-                    #open(ArgsFile, 'a')
+                    # open(ArgsFile, 'a')
                     exit()
 
         Mode = 2
@@ -121,8 +123,7 @@ if __name__ == '__main__':
         print("Number of arguments: ", len(sys.argv))
         print("The arguments are: ", str(sys.argv))
 
-
-    #Create bin representation strings
+    # Create bin representation strings
     MaskBitReducedString = []
     print('Build Mask(KeyScore>>in Bits).')
     for i in range(KeySize):
@@ -169,14 +170,14 @@ if __name__ == '__main__':
     WriteKey = np.arange(KeySize)
 
     #  Make array for Data For High Mem use ver..
-    Data_Byte_Array = bytearray(b"")  #  bytearray(b'')  # bytearray('', encoding='ascii')
+    Data_Byte_Array = bytearray(b"")  # bytearray(b'')  # bytearray('', encoding='ascii')
 
     print('')
     print('Start the clock..')
     StartTime = time.time()
 
     if Mode == 1:  # Compress Mode Verbrose 1 and 0
-        #Read_Size = 1 #To be sure its 1  early dayz go slooooooooooooooo
+        # Read_Size = 1 #To be sure its 1  early dayz go slooooooooooooooo
         if Verbose == 1:
             if Lowmemmode == 1:
                 #  Read File Data in Bytes And Score
@@ -185,7 +186,7 @@ if __name__ == '__main__':
                     exit()
                 with open(ArgsFile, 'rb') as f:
                     byte = f.read(Read_Size)  # read header here!
-                    #f.seek(0) #To Adjust Read offset after read try  back to start..
+                    # f.seek(0) #To Adjust Read offset after read try  back to start..
                     while byte:
                         try:
                             index = ord(byte)
@@ -195,13 +196,13 @@ if __name__ == '__main__':
                         # FIX
                         # if Ratio <100 % Count Bytes read and use seek to files end once Ratio Met.
                         #  print (index)
-                        #nums = [ord(index) for index in '']
-                        #if Verbrose:
-                            #print(index)
-                        #Data_Byte_Array.append(ord(x) for x in index)  # Store file Data saves ReReading file
-                        #Data_Byte_Array = bytearray(f) # Load in one go!
+                        # nums = [ord(index) for index in '']
+                        # if Verbrose:
+                        # print(index)
+                        # Data_Byte_Array.append(ord(x) for x in index)  # Store file Data saves ReReading file
+                        # Data_Byte_Array = bytearray(f) # Load in one go!
 
-                        #LowMem>
+                        # LowMem>
                         if index:
                             Score[index] += 1
 
@@ -242,7 +243,7 @@ if __name__ == '__main__':
                         if len(NoteWorthy) > 70:
                             break
 
-                    #f.seek(i)  # exit loop
+                    # f.seek(i)  # exit loop
 
         else:  # Silent Mode Verbrose !=1 For Speed Have two seprate versions reduce time by no if statements.
             # Read File Data in Bytes And Score Rep (Multiply By Bit Length To be optimal Convergence)
@@ -258,7 +259,7 @@ if __name__ == '__main__':
                     pass
                     # print (index)
                     if index:
-                        Score[index] += len(bin(index))  #  Add Score
+                        Score[index] += len(bin(index))  # Add Score
                         # if Score[index] > MaxRep:
                         # if index not in NoteWorthy:  # NoteWorthy.
                         # NoteWorthy.append(index)
@@ -272,9 +273,9 @@ if __name__ == '__main__':
             print('Verbrose Mode.')
             print('Score Data After Conversion....')
             print(Score)
-    #  ----------------------------------------------------------------------------------------------------------------
-    #  ----------------------------------------------------------------------------------------------------------------
-    #if Mode == 1:  # 1 = Compression   ---bug this is obviosely mode 1!
+        #  ----------------------------------------------------------------------------------------------------------------
+        #  ----------------------------------------------------------------------------------------------------------------
+        # if Mode == 1:  # 1 = Compression   ---bug this is obviosely mode 1!
         print('Make Remap. Mode:', Mode, '       Mem:', Lowmemmode)
 
         if Lowmemmode == 0:
@@ -290,8 +291,8 @@ if __name__ == '__main__':
             for i in range(0, KeySize):
                 #  Sort KeyMap Remove From ScoreKeyList (((first 63))) =bits-1
                 ScoreKeylist.append(i)  # Create A Container For KeyFromScore.
-                #ScoreKeylist[i] = -1  # Set To Negative one before Score to ID Done.
-                #while KeySwaps and i < TargetKeySwaps:
+                # ScoreKeylist[i] = -1  # Set To Negative one before Score to ID Done.
+                # while KeySwaps and i < TargetKeySwaps:
                 for iu in range(KeySize):
                     if Score[iu] >= HS:
                         HS = Score[iu]
@@ -300,14 +301,15 @@ if __name__ == '__main__':
                             print('id=', iu, ': Score=', Score[iu])
 
                         if Verbose == 2:
-                            print('KeySwap Count ', KeySwaps, 'New Key Info..Ammend at Loop ', i, '    KEY ', iu, ' ', ScoreKeylist[i]), '= ID'  # [%d%%\r%i, end=""])
+                            print('KeySwap Count ', KeySwaps, 'New Key Info..Ammend at Loop ', i, '    KEY ', iu, ' ',
+                                  ScoreKeylist[i]), '= ID'  # [%d%%\r%i, end=""])
                     # ScoreKeylist[i] #Just do once at end of  loop
 
                 KeySwaps += 1
-                ScoreKeylist[i] = ID #  = 1 = 255 2 = 43 ect
+                ScoreKeylist[i] = ID  # = 1 = 255 2 = 43 ect
                 Score[ID] = -1  # Block from Check.
-                HS = -1         # Reset Loop HighScore
-                ID = 0          # Reset Loop Score Index
+                HS = -1  # Reset Loop HighScore
+                ID = 0  # Reset Loop Score Index
 
                 if Verbose > 1:
                     print('')
@@ -342,7 +344,7 @@ if __name__ == '__main__':
             if Verbose == 3:
                 print(Data_Byte_Array)  # Data_Byte_Array
 
-            #Write File!
+            # Write File!
             # Write De-Compressor Key
             # foo = ''.join(foo.split()) # remove white spaces
             cf = ArgsFile[:-3]
@@ -352,22 +354,22 @@ if __name__ == '__main__':
                 print('File Out Name =', Compressed_ArgsFile_Name)
 
             # Write Header & Decompress Key(ScoreKeylist)
-            #print('Writing File Header.')
-            #print("%s\n" % FC_Header_Key_str for FC_Header_Key_str in ScoreKeylist)
+            # print('Writing File Header.')
+            # print("%s\n" % FC_Header_Key_str for FC_Header_Key_str in ScoreKeylist)
 
-            #Clear Contents of Mapfile if exista.
+            # Clear Contents of Mapfile if exista.
             ClearFile(Compressed_ArgsFile_Name)
             FcM256 = open(Compressed_ArgsFile_Name, 'a')  # Mapfile
-            #FcM256.writelines("%s\n" % FC_Header_Key_str for FC_Header_Key_str in ScoreKeylist)
-            #for FC_Header_Key_str in ScoreKeylist:
-            #FcM256.write(ScoreKeylist[FC_Header_Key_str])
+            # FcM256.writelines("%s\n" % FC_Header_Key_str for FC_Header_Key_str in ScoreKeylist)
+            # for FC_Header_Key_str in ScoreKeylist:
+            # FcM256.write(ScoreKeylist[FC_Header_Key_str])
             # file.writelines("%s\n" % item for item in list)
 
             # Fix Compression Speed Control mainly governed by how much data read and scored
             # Also could do runlength scan and alter scored data  to increase the run length if
             # possible by shifting the value of the run block especially if its only one number stopping the run.
 
-            #Low Mem Mode uses old File rather than a stored version.
+            # Low Mem Mode uses old File rather than a stored version.
             #  Write Through>KeyMp>Conversion Table
             _Modetxt = ""
             if Mode == 1:
@@ -394,28 +396,28 @@ if __name__ == '__main__':
             # init temp map array
             _fstMapstringarray = []
 
-            #FcM256 = open(Compressed_ArgsFile_Name, 'ab')  # Out>File>Binary.
+            # FcM256 = open(Compressed_ArgsFile_Name, 'ab')  # Out>File>Binary.
             f = open(ArgsFile, 'rb')
             Data_Byte_Array = bytearray(f.read())  # Load in one go!
 
             for z in Data_Byte_Array:
                 index = z
-                #print(index)
+                # print(index)
                 for findmap in range(KeySize):  # findmap is the value needed
                     if OrderedScoreKeyMap[findmap] == index:
-                        #MapFound
+                        # MapFound
                         _Bytemap = OrderedScoreKeyMap[index]  # OrderedScoreKeyMap[i]
                         if Verbose > 1:
                             print(findmap)
                         break
 
-
-                if Verbose > 1: #1 ----------
-                    #Mybitlength = _Bytemap.bit_length()
-                    #OrigBitLength = byte.bit_legth()
-                    #print('My=', Mybitlength)
+                if Verbose > 1:  # 1 ----------
+                    # Mybitlength = _Bytemap.bit_length()
+                    # OrigBitLength = byte.bit_legth()
+                    # print('My=', Mybitlength)
                     ##print('Orig=', OrigBitLength)
-                    print('File(int) =', index, 'Remap =', findmap, '=Mem(byte)=', byte, '=(Original)mapped ver=', _Bytemap,'=chr(', chr(_Bytemap), 2)
+                    print('File(int) =', index, 'Remap =', findmap, '=Mem(byte)=', byte, '=(Original)mapped ver=',
+                          _Bytemap, '=chr(', chr(_Bytemap), 2)
 
                 # update map data write every 64000 entries
                 ##FcM256.write(str(findmap))
@@ -425,19 +427,19 @@ if __name__ == '__main__':
                     print('.', end='')
 
                     for mapv in range(len(_fstMapstringarray)):
-                        if Verbose > 0: #<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>Map file not needed in final release<<<<
+                        if Verbose > 0:  # <<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>Map file not needed in final release<<<<
                             FcM256.write(str(_fstMapstringarray[mapv]))
                             ##FcM256.write(',')##csv setup for readability
 
                     for mapv in range(len(_fstMapstringarray)):
                         _fstMapstringarray.pop(0)
 
-                #FcM256.close()
+                # FcM256.close()
                 #  --Continue Write Re-Map---
 
-            #write last data held in _fstMapstringarray
+            # write last data held in _fstMapstringarray
             for mapv in range(len(_fstMapstringarray)):
-                if Verbose > 0:  #<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>Map file not needed in final release<<<<
+                if Verbose > 0:  # <<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>Map file not needed in final release<<<<
                     FcM256.write(str(_fstMapstringarray[mapv]))
 
             for mapv in range(len(_fstMapstringarray)):
@@ -446,7 +448,7 @@ if __name__ == '__main__':
             #  Done With open files(end of with)
             FcM256.close()
 
-            #ArgsFile.close()
+            # ArgsFile.close()
 
             print('Bit reduction MapFile Wrote.')
 
@@ -485,28 +487,28 @@ if __name__ == '__main__':
 
             print('Writing Zip File Header.')
             print("%s\n" % FC_Header_Key_str for FC_Header_Key_str in ScoreKeylist)
-            #FcB256.writelines('FCzip GDCC_Entry_2021_By_Brett Palmer.')
+            # FcB256.writelines('FCzip GDCC_Entry_2021_By_Brett Palmer.')
             FcB256.writelines("%s\n" % FC_Header_Key_str for FC_Header_Key_str in ScoreKeylist)  # write key
             # for FC_Header_Key_str in ScoreKeylist:
 
             print('Header Wrote.')
-            Zip_seek = FcB256.tell() #//function
+            Zip_seek = FcB256.tell()  # //function
             # Temp Close write mode change.
             FcB256.close()
 
             print('Reading Map File,*(', Compressed_ArgsFile_Name, ') & Building Zip*', Compressed_Bin_ArgsFile_Name)
 
             # fix use memory stored data rather than reading from file!
-            #Re-Open Bin File in Binary Mode
+            # Re-Open Bin File in Binary Mode
             FcB256 = open(Compressed_Bin_ArgsFile_Name, 'ab')
 
-            #Move Past Header  zipseek holds location  to move to.
+            # Move Past Header  zipseek holds location  to move to.
             FcB256.seek(Zip_seek)
 
             # Fix To Use Data_Byte_Array(Copy Of File Compressing or the map)(High-Mem)
-            #FcM256 = open(Compressed_ArgsFile_Name, 'r')  # Mapfile In>
+            # FcM256 = open(Compressed_ArgsFile_Name, 'r')  # Mapfile In>
 
-            #Keep eye on BitSize Changes
+            # Keep eye on BitSize Changes
             LastMaxbits = 0
             countsamesize = 0
         print('Building Binary File.')
@@ -521,7 +523,7 @@ if __name__ == '__main__':
                     print('End Of Map Data.?')
                 pass
                 # Progress info
-                #print('.', end='') #Data_Byte_Array in 1 data
+                # print('.', end='') #Data_Byte_Array in 1 data
                 ##print(len(Data_Byte_Array) - f.tell(), end='')
                 ##print_at(1, 10, len(Data_Byte_Array) - f.tell())
                 _plength = len(Data_Byte_Array)
@@ -541,7 +543,7 @@ if __name__ == '__main__':
                 PositionInMap += BitCountThisBloc  # start -1
                 BitCountThisBloc = len(MaskBitReducedString[MapValue])
 
-                #Bitsize Info Debug
+                # Bitsize Info Debug
                 if Verbose > 4:
                     print(len(MaskBitReducedString[MapValue]))
                     print('Last Size =', LastMaxbits)
@@ -560,10 +562,10 @@ if __name__ == '__main__':
                 if PositionInMap > Chunk:
                     if Verbose > 1:
                         print('Data Withheld But Construction Data Lost !!')  ######bin_array 475 linenum########<<Fix<
-                        print('bits+1=', PositionInMap+1)
+                        print('bits+1=', PositionInMap + 1)
                         print('BinWriteBlockSize=', len(BinWriteBlock))
                         print('Max Index=', len(BinWriteBlock))
-                        print('PosInMap=', PositionInMap+1)
+                        print('PosInMap=', PositionInMap + 1)
                         print('BWB_val=', BinWriteBlock)
                         print('')
 
@@ -574,48 +576,31 @@ if __name__ == '__main__':
 
                         bits = BinWriteBlock[CreateBin]
                         byte = bits[CreateBin:CreateBin + len(BinWriteBlock)][::-1]
-
+                        _StrToBin = BinWriteBlock[CreateBin]
                         ##print('byte len =', len(byte), '   Pos:', PositionInMap)
-
                         # check for limit to chunk<store<rewind<read(Dont-Lose-This-Data-Position
-                        if PositionInMap + len(byte) > Chunk:
-                            ##Zip_seek = FcB256.tell() - (len(BinWriteBlock) - CreateBin)##bug with relocation of read
-                            ##f.seek(Zip_seek)
-                            # Reset Pos & block info
-                            MaxBits = 0
-                            PositionInMap = 0
-                            BitCountThisBloc = 0
-                            # remove block data(reset)
-                            for RemoveMem in range(len(BinWriteBlock)):
-                                # Remove BinWriteBlocks from memory
-                                BinWriteBlock.pop(0)
-
-                            String_byte = f.read(Read_Size)  # Read More  String_byte = f.read(Read_Size)
-                            ##ValueError: invalid literal for int() with base 10: ',' Coz the csv setup!!y
-                            ##MapValue = int(String_byte)##check csc comma,seperarred,vaules
-                            break
-
-                        _StrToBin.join(BitArray(uint=x, length=len(BinWriteBlock)) for x in BinWriteBlock)
-                        #bin_array.append(int(byte, 2))
-                        #_StrToBin.append(int(byte, 2))
+                        ###_StrToBin.join(BitArray(uint=x, length=len(BinWriteBlock)) for x in BinWriteBlock)
+                        # bin_array.append(int(byte, 2))
+                        # _StrToBin.append(int(byte, 2))
                         # Construct Array Data.
-                        #bytes(_StrToBin, 'utf-16')
+                        # bytes(_StrToBin, 'utf-16')
                         print('_StrToBin', _StrToBin)
                         # _StrToBin = bytearray(BinWriteBlock[CreateBin], 'ascii')
-                        #_StrToBin = bitstring_to_bytes(BinWriteBlock[CreateBin])
-                        #print(_StrToBin)
-                        
-                        #bin_stream.write(BinWriteBlock[CreateBin].encode('ascii'))  # binary_stream.write
-                        #bin_stream.write(bytes(BinWriteBlock[CreateBin].encode('ascii')))
+                        # _StrToBin = bitstring_to_bytes(BinWriteBlock[CreateBin])
+                        # print(_StrToBin)
+
+                        # bin_stream.write(BinWriteBlock[CreateBin].encode('ascii'))  # binary_stream.write
+                        # bin_stream.write(bytes(BinWriteBlock[CreateBin].encode('ascii')))
 
                         if Verbose > 1:
                             print('#', CreateBin, '   ', BinWriteBlock[CreateBin], bin_stream)
                         # Write to Zip Reduced Bytes
-                        #FcB256.write(bytes(bin_stream))  # fix Write at end.
-                        #print('FileData', bytes(bin_stream))
+                        # FcB256.write(bytes(bin_stream))  # fix Write at end.
+                        # print('FileData', bytes(bin_stream))
 
-                    #bin_stream.write(bytes(BinWriteBlock[CreateBin].encode('ascii')))
-                    bin_stream.write(bytes(_StrToBin))
+                    # bin_stream.write(bytes(BinWriteBlock[CreateBin].encode('ascii')))
+                    #bytemade = '' + join(format(x, 'b') for x in bytearray(_StrToBin, 'utf-8'))
+                    bin_stream.write(bytearray(_StrToBin.encode('utf-8')))
                     for RemoveMem in range(len(BinWriteBlock)):
                         # Remove BinWriteBlocks from memory
                         BinWriteBlock.pop(0)
@@ -630,41 +615,43 @@ if __name__ == '__main__':
                     _StrToBin = BitArray()
                     bits = ""
                     byte = None
-                    if Verbose > 1:#--
-                        print('bits=', PositionInMap+1)
+                    if Verbose > 1:  # --
+                        print('bits=', PositionInMap + 1)
                         print('BinWriteBlockSize=', len(BinWriteBlock))
                         print('Max Index=', len(BinWriteBlock))
-                        print('PosInMap=', PositionInMap+1)
+                        print('PosInMap=', PositionInMap + 1)
                         print('BWB_val=', BinWriteBlock)
                         print('')
 
                     # Remove MaskBitReducedString[0 - PositionInMap]
                     for CreateBin in range(len(BinWriteBlock)):
-                        #byte = bits[index:index + 8][::-1]
-                        #bin_array.append(int(byte, 2))
-                        #bits = BinWriteBlock[CreateBin]
-                        #byte = bits[CreateBin:CreateBin + len(BinWriteBlock)][::-1]
-                        #_StrToBin.join(BitArray(uint=x, length=len(BinWriteBlock)) for x in BinWriteBlock)
+                        # byte = bits[index:index + 8][::-1]
+                        # bin_array.append(int(byte, 2))
+                        # bits = BinWriteBlock[CreateBin]
+                        # byte = bits[CreateBin:CreateBin + len(BinWriteBlock)][::-1]
+                        # _StrToBin.join(BitArray(uint=x, length=len(BinWriteBlock)) for x in BinWriteBlock)
 
                         # Construct Array Data.
+                        _StrToBin = BinWriteBlock[CreateBin]
                         bits.join(BinWriteBlock[CreateBin])
-                        #print('Bits = ', bits)
+                        # print('Bits = ', bits)
                         byte = bits[CreateBin:CreateBin + len(BinWriteBlock)][::-1]
-                        #print('Byte = ', byte)
-                        #bin_array.append(int(byte, 2))
-                        #_StrToBin.append(int(byte, 2))#///////////////////////////////////here
+                        # print('Byte = ', byte)
+                        # bin_array.append(int(byte, 2))
+                        # _StrToBin.append(int(byte, 2))#///////////////////////////////////here
                         # Construct Array Data.
-                        #bytes(_StrToBin, 'utf-16')
-                        #print('created int value from byte=', _StrToBin)
-                        #bin_stream.write(BinWriteBlock[CreateBin].encode('ascii')) #binary_stream.write
+                        # bytes(_StrToBin, 'utf-16')
+                        # print('created int value from byte=', _StrToBin)
+                        # bin_stream.write(BinWriteBlock[CreateBin].encode('ascii')) #binary_stream.write
 
                         if Verbose > 1:
                             print('#', CreateBin, '   ', BinWriteBlock[CreateBin], bin_stream)
                         # Write to Zip Reduced Bytes
-                        #FcB256.write(bytes(bin_stream))  # fix Write at end.
-                        #print('FileData', bytes(bin_stream))
+                        # FcB256.write(bytes(bin_stream))  # fix Write at end.
+                        # print('FileData', bytes(bin_stream))
 
-                    bin_stream.write(bytes(_StrToBin))
+                    #bin_stream.write(bitstring_to_bytes(bits))
+                    bin_stream.write(bytes(bits.encode('ascii')))
 
                     for RemoveMem in range(len(BinWriteBlock)):
                         # Remove BinWriteBlock from memory
@@ -682,7 +669,7 @@ if __name__ == '__main__':
 
                 MappedSize += MapValue.bit_length()
                 OrigSize += 8
-                String_byte = f.read(Read_Size)  #Read More
+                String_byte = f.read(Read_Size)  # Read More
 
             if Verbose == 4:
                 print('')
@@ -694,25 +681,24 @@ if __name__ == '__main__':
             # Write to Zip Reduced Bytes
             print('')
             print('Writing Zip: Write In One...')
-            #bin_array.append(int(BinWriteBlock[0]))
-            #FcB256.write(bin_stream)  # fix Write at end.
+            # bin_array.append(int(BinWriteBlock[0]))
+            # FcB256.write(bin_stream)  # fix Write at end.
             bin_stream.seek(0)
-            #FcB256.write(bin_stream.read())
-            #print(bin_stream.read())
+            # FcB256.write(bin_stream.read())
+            # print(bin_stream.read())
             B = bitarray()
             B.frombytes(bin_stream.read())
             B.tofile(FcB256)  # true bin
 
             # Memory Cleanup
-            #bin_stream.close() # save close till end
+            # bin_stream.close() # save close till end
             # End Of Compression! GDCC days to go !!
 
-
-        #File-data-zipped
+        # File-data-zipped
         bin_stream.seek(0)
         print((bin_stream.read()))
 
-        #Results
+        # Results
         print('\nResults:')
         added = (OrigSize / 8) / 10
         os_Z_fsize = os.stat(Compressed_Bin_ArgsFile_Name)
@@ -722,11 +708,12 @@ if __name__ == '__main__':
 
         print('File Size On Disc =', os_fsize.st_size)
         print(' ZIP Size On Disc =', os_Z_fsize.st_size)
-        print('    Original size =', OrigSize/1024)
-        print('    Mapped Size   = ', MappedSize/1024)
-        print('    Added         =  ', added/1024)
+        print('    Original size =', OrigSize / 1024)
+        print('    Mapped Size   = ', MappedSize / 1024)
+        print('    Added         =  ', added / 1024)
 
-        print('Saving ', (OrigSize - (MappedSize + added))/1024, ' Bytes(ish)  Ratio of ', OrigSize / (MappedSize + added) * 100, '%')
+        print('Saving ', (OrigSize - (MappedSize + added)) / 1024, ' Bytes(ish)  Ratio of ',
+              OrigSize / (MappedSize + added) * 100, '%')
 
         print('Writing Bin FCZipped!')
 
@@ -736,256 +723,256 @@ if __name__ == '__main__':
 
         print('Complete....')
     if Lowmemmode == 1:
-            #  GenScoreKeyMap
-            # Make array for Score
-            OrderedScoreKeyMap = np.arange(KeySize)  # [0 for i in range(KeySize)]
-            HS = -1  # 0=0 so set -1 to start
-            ID = 0
-            ScoreKeylist = []  # Make A List of All Keys(Keysize) #!!!! Fix make this list direct in order from score values
-            TargetKeySwaps = KeySize
-            KeySwaps = 0
-            for i in range(0, KeySize):
-                #  Sort KeyMap Remove From ScoreKeyList (((first 63))) =bits-1
-                ScoreKeylist.append(i)  # Create A Container For KeyFromScore.
-                #ScoreKeylist[i] = -1  # Set To Negative one before Score to ID Done.
-                #while KeySwaps and i < TargetKeySwaps:
-                for iu in range(KeySize):
-                    if Score[iu] >= HS:
-                        HS = Score[iu]
-                        ID = iu
-                        if Verbose == 2:
-                            print('KeySwap Count ', KeySwaps, 'New Key Info..Ammend at Loop ', i, '    KEY ', iu, ' ', ScoreKeylist[i]), '= ID'  # [%d%%\r%i, end=""])
-                    # ScoreKeylist[i] #Just do once at end of  loop
+        #  GenScoreKeyMap
+        # Make array for Score
+        OrderedScoreKeyMap = np.arange(KeySize)  # [0 for i in range(KeySize)]
+        HS = -1  # 0=0 so set -1 to start
+        ID = 0
+        ScoreKeylist = []  # Make A List of All Keys(Keysize) #!!!! Fix make this list direct in order from score values
+        TargetKeySwaps = KeySize
+        KeySwaps = 0
+        for i in range(0, KeySize):
+            #  Sort KeyMap Remove From ScoreKeyList (((first 63))) =bits-1
+            ScoreKeylist.append(i)  # Create A Container For KeyFromScore.
+            # ScoreKeylist[i] = -1  # Set To Negative one before Score to ID Done.
+            # while KeySwaps and i < TargetKeySwaps:
+            for iu in range(KeySize):
+                if Score[iu] >= HS:
+                    HS = Score[iu]
+                    ID = iu
+                    if Verbose == 2:
+                        print('KeySwap Count ', KeySwaps, 'New Key Info..Ammend at Loop ', i, '    KEY ', iu, ' ',
+                              ScoreKeylist[i]), '= ID'  # [%d%%\r%i, end=""])
+                # ScoreKeylist[i] #Just do once at end of  loop
 
-                KeySwaps += 1
-                ScoreKeylist[i] = ID #  = 1 = 255 2 = 43 ect
-                Score[ID] = -1  # Block from Check.
-                HS = -1         # Reset Loop HighScore
-                ID = 0          # Reset Loop Score Index
+            KeySwaps += 1
+            ScoreKeylist[i] = ID  # = 1 = 255 2 = 43 ect
+            Score[ID] = -1  # Block from Check.
+            HS = -1  # Reset Loop HighScore
+            ID = 0  # Reset Loop Score Index
 
-                if Verbose:
-                    print('')
-                    print('List Size:=', KeySize)
-                    print('Key Size =', len(ScoreKeylist))
-                    print('')
+            if Verbose:
+                print('')
+                print('List Size:=', KeySize)
+                print('Key Size =', len(ScoreKeylist))
+                print('')
 
-                if KeySize == KeySwaps:
-                    print('Looking Good... KeyLength || KeySwaps || KeySize All Match.')
+            if KeySize == KeySwaps:
+                print('Looking Good... KeyLength || KeySwaps || KeySize All Match.')
 
-                #  print(ScoreKeylist[KeySize])
-                #  ScoreKeylist[KeySize-i].delete(arr,) #Revers Bits
-                #  np.delete(ScoreKeylist, ID)
-                #  print('List:=', ScoreKeylist[KeySize-i])
+            #  print(ScoreKeylist[KeySize])
+            #  ScoreKeylist[KeySize-i].delete(arr,) #Revers Bits
+            #  np.delete(ScoreKeylist, ID)
+            #  print('List:=', ScoreKeylist[KeySize-i])
 
-            #  Create Ordermap
-            for i in range(KeySize):
-                OrderedScoreKeyMap[i] = ScoreKeylist[i]
-                if Verbose:
-                    print(OrderedScoreKeyMap[i])
+        #  Create Ordermap
+        for i in range(KeySize):
+            OrderedScoreKeyMap[i] = ScoreKeylist[i]
+            if Verbose:
+                print(OrderedScoreKeyMap[i])
 
+        if Verbose == 1:
+            print('Remap Created.')
+            print('ScoreKeyList=')
+            print(ScoreKeylist)
+            print('OrderedScoreKeyMap=')
+            print(OrderedScoreKeyMap)
+        #  Done.
 
-            if Verbose == 1:
-                print('Remap Created.')
-                print('ScoreKeyList=')
-                print(ScoreKeylist)
-                print('OrderedScoreKeyMap=')
-                print(OrderedScoreKeyMap)
-            #  Done.
+        #  Compress Convert Stage!
+        #  Read Or Use Data_array?
+        if Verbose == 3:
+            print(Data_Byte_Array)  # Data_Byte_Array
 
-            #  Compress Convert Stage!
-            #  Read Or Use Data_array?
-            if Verbose == 3:
-                print(Data_Byte_Array)  # Data_Byte_Array
+        # Write File!
+        # Write De-Compressor Key
+        # foo = ''.join(foo.split()) # remove white spaces
+        cf = ArgsFile[:-3]
+        Compressed_ArgsFile_Name = cf + ".M256"
 
-            #Write File!
-            # Write De-Compressor Key
-            # foo = ''.join(foo.split()) # remove white spaces
-            cf = ArgsFile[:-3]
-            Compressed_ArgsFile_Name = cf + ".M256"
+        if Verbose == 1:
+            print('File Out Name =', Compressed_ArgsFile_Name)
 
-            if Verbose == 1:
-                print('File Out Name =', Compressed_ArgsFile_Name)
+        # Write Header & Decompress Key(ScoreKeylist)
+        # print('Writing File Header.')
+        # print("%s\n" % FC_Header_Key_str for FC_Header_Key_str in ScoreKeylist)
 
-            # Write Header & Decompress Key(ScoreKeylist)
-            #print('Writing File Header.')
-            #print("%s\n" % FC_Header_Key_str for FC_Header_Key_str in ScoreKeylist)
+        # Clear Contents of Mapfile if exista.
+        ClearFile(Compressed_ArgsFile_Name)
+        FcM256 = open(Compressed_ArgsFile_Name, 'a')  # Mapfile
+        # FcM256.writelines("%s\n" % FC_Header_Key_str for FC_Header_Key_str in ScoreKeylist)
+        # for FC_Header_Key_str in ScoreKeylist:
+        # FcM256.write(ScoreKeylist[FC_Header_Key_str])
+        # file.writelines("%s\n" % item for item in list)
 
-            #Clear Contents of Mapfile if exista.
-            ClearFile(Compressed_ArgsFile_Name)
-            FcM256 = open(Compressed_ArgsFile_Name, 'a')  #Mapfile
-            #FcM256.writelines("%s\n" % FC_Header_Key_str for FC_Header_Key_str in ScoreKeylist)
-            #for FC_Header_Key_str in ScoreKeylist:
-            #FcM256.write(ScoreKeylist[FC_Header_Key_str])
-            # file.writelines("%s\n" % item for item in list)
+        # Low Mem Mode uses old File rather than a stored version.
+        #  Write Through>KeyMp>Conversion Table
+        print('Slow Low Mem Use Mode & MAx Compression.')
+        print()
+        print('Read....', ArgsFile)
+        print('Map.....', FcM256)
+        print('Zip.....=.Z256')
+        print('Writing Map File.')
+        FcM256 = open(Compressed_ArgsFile_Name, 'a')  # Out Text
+        # FcM256 = open(Compressed_ArgsFile_Name, 'ab')  # Out>File>Binary.
+        with open(ArgsFile, "rb") as f:  # In>file
+            byte = f.read(Read_Size)  # speedup use size off key as Read_Size = KeySize
+            while byte:
+                # byte = f.read(Read_Size) #put at bottum no need to re-seek file start
+                try:
+                    index = ord(byte)
+                except:
+                    print('End Of Data Stream.')
+                pass
+                #  while byte != b"":
+                #  print (index)
+                #  FcM256 = open('FCOutPut.M256', 'a')
+                # FcM256 = open(Compressed_ArgsFile_Name, 'ab') #  Out>File.
+                for findmap in range(KeySize):  # findmap is the value needed
+                    if OrderedScoreKeyMap[findmap] == index:
+                        # MapFound
+                        _Bytemap = OrderedScoreKeyMap[index]  # OrderedScoreKeyMap[i]
 
-            #Low Mem Mode uses old File rather than a stored version.
-            #  Write Through>KeyMp>Conversion Table
-            print('Slow Low Mem Use Mode & MAx Compression.')
-            print()
-            print('Read....', ArgsFile)
-            print('Map.....', FcM256)
-            print('Zip.....=.Z256')
-            print('Writing Map File.')
-            FcM256 = open(Compressed_ArgsFile_Name, 'a')  # Out Text
-            #FcM256 = open(Compressed_ArgsFile_Name, 'ab')  # Out>File>Binary.
-            with open(ArgsFile, "rb") as f: #  In>file
-                byte = f.read(Read_Size)  # speedup use size off key as Read_Size = KeySize
-                while byte:
-                   # byte = f.read(Read_Size) #put at bottum no need to re-seek file start
-                    try:
-                        index = ord(byte)
-                    except:
-                        print('End Of Data Stream.')
-                    pass
-                    #  while byte != b"":
-                    #  print (index)
-                    #  FcM256 = open('FCOutPut.M256', 'a')
-                    #FcM256 = open(Compressed_ArgsFile_Name, 'ab') #  Out>File.
-                    for findmap in range(KeySize):  # findmap is the value needed
-                        if OrderedScoreKeyMap[findmap] == index:
-                            #MapFound
-                            _Bytemap = OrderedScoreKeyMap[index]  # OrderedScoreKeyMap[i]
+                        if Verbose > 0:
+                            print(findmap)
+                        break
 
-                            if Verbose > 0:
-                                print(findmap)
-                            break
+                if Verbose == 2:  # 1 ----------
+                    # Mybitlength = _Bytemap.bit_length()
+                    # OrigBitLength = byte.bit_legth()
+                    # print('My=', Mybitlength)
+                    ##print('Orig=', OrigBitLength)
+                    print('File(int) =', index, 'Remap =', findmap, '=Mem(byte)=', byte, '=(Original)mapped ver=',
+                          _Bytemap, '=chr(', chr(_Bytemap), 2)
 
+                FcM256.write(str(findmap))
+                # file.seek(fil.tell()-1) -rewind 1 place
+                # FcM256.write(_Bytemap)  # Written In Max << Min(SIZE) Bit Order
+                # FcM256.write(bytes(findmap))  #[:-1] Written In Max << Min(SIZE) Bit Order
+                # FcM256.write(str(findmap)+',')
+                # FcM256.write(bytes(byte))
+                # FcM256.write(byte)
+                # FcM256.write(OrderedScoreKeyMap[255-byte])  # reverse 255-byte
 
+                # FcM256.close()
+                #  --Continue Write Re-Map---
+                byte = f.read(Read_Size)  # Next read! at end!!
+        #  Done With open files(end of with)
+        FcM256.close()
 
-                    if Verbose == 2: #1 ----------
-                        #Mybitlength = _Bytemap.bit_length()
-                        #OrigBitLength = byte.bit_legth()
-                        #print('My=', Mybitlength)
-                        ##print('Orig=', OrigBitLength)
-                        print('File(int) =', index, 'Remap =', findmap, '=Mem(byte)=', byte, '=(Original)mapped ver=', _Bytemap,'=chr(', chr(_Bytemap), 2)
+        # ArgsFile.close()
 
-                    FcM256.write(str(findmap))
-                    #file.seek(fil.tell()-1) -rewind 1 place
-                    #FcM256.write(_Bytemap)  # Written In Max << Min(SIZE) Bit Order
-                    #FcM256.write(bytes(findmap))  #[:-1] Written In Max << Min(SIZE) Bit Order
-                    #FcM256.write(str(findmap)+',')
-                    #FcM256.write(bytes(byte))
-                    #FcM256.write(byte)
-                    #FcM256.write(OrderedScoreKeyMap[255-byte])  # reverse 255-byte
+        print('Bit reduction MapFile Wrote.')
 
-                    #FcM256.close()
-                    #  --Continue Write Re-Map---
-                    byte = f.read(Read_Size)  # Next read! at end!!
-            #  Done With open files(end of with)
-            FcM256.close()
+        # -------------------------------------------------------------
+        # -------------------MAGIC BIT---------------------------------
+        # -------------------------------------------------------------
 
-            #ArgsFile.close()
+        # Setup Array to write in one shot.
+        bin_stream = array("B")
 
-            print('Bit reduction MapFile Wrote.')
+        # Setup WriteBlock
+        BinWriteBlock = []
 
-            # -------------------------------------------------------------
-            # -------------------MAGIC BIT---------------------------------
-            # -------------------------------------------------------------
+        # Set Chunk Size(WriteBlockSize)
+        Chunk = 32 - 1  # Block Of Maped Bits. pos 0 = 1
 
-            # Setup Array to write in one shot.
-            bin_stream = array("B")
+        # BitsHolder
+        bits = ""
 
-            # Setup WriteBlock
-            BinWriteBlock = []
+        # Counter Bit Count
+        MaxBits = 0
+        BitCountThisBloc = 0
 
-            # Set Chunk Size(WriteBlockSize)
-            Chunk = 32 - 1  #Block Of Maped Bits. pos 0 = 1
+        # Counter Current Map Index Pos
+        PositionInMap = 0
 
-            # BitsHolder
-            bits = ""
+        # Stats
+        OrigSize = 0
+        MappedSize = 0
 
-            # Counter Bit Count
-            MaxBits = 0
-            BitCountThisBloc = 0
+        print('Converting Binary data.')
+        Compressed_Bin_ArgsFile_Name = cf + '.B256'
 
-            # Counter Current Map Index Pos
-            PositionInMap = 0
+        # Clear file Contents if exist.
+        ClearFile(Compressed_Bin_ArgsFile_Name)
+        FcB256 = open(Compressed_Bin_ArgsFile_Name, 'a')
 
-            # Stats
-            OrigSize = 0
-            MappedSize = 0
+        print('Writing Zip File Header.')
+        print("%s\n" % FC_Header_Key_str for FC_Header_Key_str in ScoreKeylist)
+        FcB256.writelines('GDCC_Entry_2021_By_Brett Palmer.')
+        FcB256.writelines("%s\n" % FC_Header_Key_str for FC_Header_Key_str in ScoreKeylist)
+        # for FC_Header_Key_str in ScoreKeylist:
 
-            print('Converting Binary data.')
-            Compressed_Bin_ArgsFile_Name = cf + '.B256'
+        print('')
+        print('Header Wrote.')
+        Zip_seek = FcB256.tell()
 
-            #Clear file Contents if exist.
-            ClearFile(Compressed_Bin_ArgsFile_Name)
-            FcB256 = open(Compressed_Bin_ArgsFile_Name, 'a')
+        FcB256.close()
 
-            print('Writing Zip File Header.')
-            print("%s\n" % FC_Header_Key_str for FC_Header_Key_str in ScoreKeylist)
-            FcB256.writelines('GDCC_Entry_2021_By_Brett Palmer.')
-            FcB256.writelines("%s\n" % FC_Header_Key_str for FC_Header_Key_str in ScoreKeylist)
-            # for FC_Header_Key_str in ScoreKeylist:
+        print('Reading Map File,*(', Compressed_ArgsFile_Name, ') & Building Zip*', Compressed_Bin_ArgsFile_Name)
 
-            print('')
-            print('Header Wrote.')
-            Zip_seek = FcB256.tell()
+        # Re-Open Bin File in Binary Mode
+        FcB256 = open(Compressed_Bin_ArgsFile_Name, 'ab')
+        # Move Past Header
+        FcB256.seek(Zip_seek)
 
-            FcB256.close()
+        # Fix To Use Data_Byte_Array(Copy Of File Compressing or the map)(High-Mem)
+        # FcM256 = open(Compressed_ArgsFile_Name, 'r')  # Mapfile In>
+        with open(Compressed_ArgsFile_Name, "r") as f:  # In>file>MAP
+            String_byte = f.read(Read_Size)  # speedup use size off key as Read_Size = KeySize
+            while String_byte:
+                # byte = f.read(Read_Size) #put at bottom no need to re-seek file start
+                try:
+                    MapValue = int(String_byte)
+                except:
+                    print('End Of Map Data.?')
+                pass
+                # Update Block
+                BinWriteBlock.append(MaskBitReducedString[MapValue])
 
-            print('Reading Map File,*(', Compressed_ArgsFile_Name, ') & Building Zip*', Compressed_Bin_ArgsFile_Name)
+                # Update PositionInMap
+                PositionInMap += 1
+                BitCountThisBloc += len(MaskBitReducedString[MapValue])  # Check if larger than Chunk
 
-            #Re-Open Bin File in Binary Mode
-            FcB256 = open(Compressed_Bin_ArgsFile_Name, 'ab')
-            #Move Past Header
-            FcB256.seek(Zip_seek)
+                # Stats
+                MappedSize += MapValue.bit_length()
+                OrigSize += 8
+                String_byte = f.read(Read_Size)  # Read More
 
-            # Fix To Use Data_Byte_Array(Copy Of File Compressing or the map)(High-Mem)
-            #FcM256 = open(Compressed_ArgsFile_Name, 'r')  # Mapfile In>
-            with open(Compressed_ArgsFile_Name, "r") as f:  # In>file>MAP
-                String_byte = f.read(Read_Size)  # speedup use size off key as Read_Size = KeySize
-                while String_byte:
-                    # byte = f.read(Read_Size) #put at bottom no need to re-seek file start
-                    try:
-                        MapValue = int(String_byte)
-                    except:
-                        print('End Of Map Data.?')
-                    pass
-                    # Update Block
-                    BinWriteBlock.append(MaskBitReducedString[MapValue])
+            if Verbose:
+                print('')
+                print('Compression Data:')
+                print('MaxBitSize =', MaxBits)
+                print('PositionInMap', PositionInMap)
+                print('')
 
-                    # Update PositionInMap
-                    PositionInMap += 1
-                    BitCountThisBloc += len(MaskBitReducedString[MapValue])  # Check if larger than Chunk
+            print('Writing Zip: Write In One...')
 
-                    # Stats
-                    MappedSize += MapValue.bit_length()
-                    OrigSize += 8
-                    String_byte = f.read(Read_Size)  #Read More
+            # Write to Zip Reduced Bytes
+            # bin_array.append(int(BinWriteBlock[0]))
+            FcB256.write(bytes(bin_stream))  # fix Write at end.
 
-                if Verbose:
-                    print('')
-                    print('Compression Data:')
-                    print('MaxBitSize =', MaxBits)
-                    print('PositionInMap', PositionInMap)
-                    print('')
+            # Memory Cleanup
+            bin_stream = 0
+            # End Of Compression! GDCC 3 days to go !!
 
-                print('Writing Zip: Write In One...')
+        # Results
+        print('\nResults:')
+        added = (OrigSize / 8) / 10
+        os_Z_fsize = os.stat(Compressed_Bin_ArgsFile_Name)
+        os_fsize = os.stat(ArgsFile)
+        print('File Size On Disc =', os_fsize.st_size)
+        print(' ZIP Size On Disc =', os_Z_fsize.st_size)
+        print('    Original size =', OrigSize / 1024)
+        print('    Mapped Size   = ', MappedSize / 1024)
+        print('    Added         =  ', added / 1024)
+        print('Saving ', (OrigSize - (MappedSize + added)) / 1024, ' Bytes(ish)  Ratio of ',
+              OrigSize / (MappedSize + added) * 100, '%')
 
-                # Write to Zip Reduced Bytes
-                #bin_array.append(int(BinWriteBlock[0]))
-                FcB256.write(bytes(bin_stream))  # fix Write at end.
-
-                # Memory Cleanup
-                bin_stream = 0
-                # End Of Compression! GDCC 3 days to go !!
-
-            #Results
-            print('\nResults:')
-            added = (OrigSize / 8) / 10
-            os_Z_fsize = os.stat(Compressed_Bin_ArgsFile_Name)
-            os_fsize = os.stat(ArgsFile)
-            print('File Size On Disc =', os_fsize.st_size)
-            print(' ZIP Size On Disc =', os_Z_fsize.st_size)
-            print('    Original size =', OrigSize/1024)
-            print('    Mapped Size   = ', MappedSize/1024)
-            print('    Added         =  ', added/1024)
-            print('Saving ', (OrigSize - (MappedSize + added))/1024, ' Bytes(ish)  Ratio of ', OrigSize / (MappedSize + added) * 100, '%')
-
-            print('Writing Bin FCZipped!')
-            FcB256.close()
-            print('Complete....')
+        print('Writing Bin FCZipped!')
+        FcB256.close()
+        print('Complete....')
 
     else:  # Decompress .M256 File >>>>> Mode !=1
         if Mode == 2:  # Decompress
@@ -997,11 +984,10 @@ if __name__ == '__main__':
             print('File Decompressed')
             print('Header Will Contain Original File Name.')
 # ----------------------------------------------------------------------------------------------
-#-------------------------------end-------------------------------------------------------------
-#-----------------------------------------------------------------------------------------------
-#if mode==2 = Decompres file enter name of file/read header key/ convert
+# -------------------------------end-------------------------------------------------------------
+# -----------------------------------------------------------------------------------------------
+# if mode==2 = Decompres file enter name of file/read header key/ convert
 EndTime = time.time()
-
 
 #  Show Running Time
 print('Time Taken =', EndTime - StartTime)
@@ -1009,5 +995,4 @@ print('Time Taken =', EndTime - StartTime)
 print('Your Zipped Data ...*.B256')
 input(" :<) Press Enter to continue... ")
 
-exit()
 
